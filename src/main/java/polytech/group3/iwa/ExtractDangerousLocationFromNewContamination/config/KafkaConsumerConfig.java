@@ -65,9 +65,5 @@ public class KafkaConsumerConfig {
         return factory;
     }
 
-    @Bean
-    public KafkaReceiverContamination receiverContamination() {
-        return new KafkaReceiverContamination();
-    }
 
 }
