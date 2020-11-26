@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public class ContaminationKafka {
 
-    private int id_keycloak;
+    private String id_keycloak;
 
     private int id_case_type;
 
@@ -15,17 +15,17 @@ public class ContaminationKafka {
 
     public ContaminationKafka() { }
 
-    public ContaminationKafka(int id_keycloak, int id_case_type, LocalDateTime reporting_date) {
+    public ContaminationKafka(String id_keycloak, int id_case_type, LocalDateTime reporting_date) {
         this.id_keycloak = id_keycloak;
         this.id_case_type = id_case_type;
         this.reporting_date = reporting_date;
     }
 
-    public int getId_keycloak() {
+    public String getId_keycloak() {
         return id_keycloak;
     }
 
-    public void setId_keycloak(int id_keycloak) {
+    public void setId_keycloak(String id_keycloak) {
         this.id_keycloak = id_keycloak;
     }
 

@@ -29,7 +29,7 @@ import java.util.concurrent.CountDownLatch;
 @EnableKafka
 class KafkaReceiverLocation {
 
-    public List<LocationKafka> locationList = new ArrayList<LocationKafka>();
+    public List<LocationKafka> locationList = new ArrayList<>();
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaReceiverLocation.class);
 
     private CountDownLatch latch = new CountDownLatch(1);
@@ -51,13 +51,14 @@ class KafkaReceiverLocation {
         JsonFactory factory = mapper.getFactory();
         JsonParser parser = factory.createParser(key);
         JsonNode payload = mapper.readTree(parser);
-        String idKeycloak = mapper.writeValueAsString(payload.get("payload").get("id_keycloak"));
+        String idKeycloak = mapper.writeValueAsString(payload.get("payload").get("id_keycloak")).replace("\"","");
         LOGGER.info("received new contamination for user='{}'", idKeycloak);
         KafkaSender kafkaSender = new KafkaSender();
         // Fetch the locations of the contaminated user and insert them in the dangerous_location topic
         System.out.println(locationList.size());
         locationList.forEach(locationKafka -> {
-            if(locationKafka.getUserid() == Integer.parseInt(idKeycloak))
+            System.out.println(locationKafka.getUserid());
+            if(locationKafka.getUserid().equals(idKeycloak))
                 System.out.println("FOUND");
             kafkaSender.sendMessage(locationKafka, "dangerous_location");
         });
@@ -83,7 +84,7 @@ class KafkaReceiverLocation {
         int i = 0;
         while(i < locationList.size() && Duration.between(LocalDateTime.parse(locationList.get(i).getLocation_date(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")), LocalDateTime.now()).toHours() > 72) {
             locationList.remove(i);
-        };
+        }
         System.out.println("there are " + locationList.size() +  " locations");
         latch.countDown();
     }

@@ -9,13 +9,13 @@ public class LocationKafka {
 
     private String location_date;
 
-    private int userid;
+    private String userid;
 
     public LocationKafka() {
         super();
     }
 
-    public LocationKafka(double latitude, double longitude, String location_date, int userid) {
+    public LocationKafka(double latitude, double longitude, String location_date, String userid) {
         super();
         this.latitude = latitude;
         this.longitude = longitude;
@@ -47,11 +47,11 @@ public class LocationKafka {
         this.location_date = location_date;
     }
 
-    public int getUserid() {
+    public String getUserid() {
         return userid;
     }
 
-    public void setUserid(int userid) {
+    public void setUserid(String userid) {
         this.userid = userid;
     }
 
