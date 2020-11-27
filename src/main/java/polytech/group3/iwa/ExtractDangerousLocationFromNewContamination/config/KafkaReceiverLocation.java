@@ -58,14 +58,16 @@ class KafkaReceiverLocation {
         System.out.println(locationList.size());
         locationList.forEach(locationKafka -> {
             System.out.println(locationKafka.getUserid());
-            if(locationKafka.getUserid().equals(idKeycloak))
+            if(locationKafka.getUserid().equals(idKeycloak)) {
                 System.out.println("FOUND");
-            kafkaSender.sendMessage(locationKafka, "dangerous_location");
+                kafkaSender.sendMessage(locationKafka, "dangerous_location");
+            }
         });
         latch.countDown();
     }
+    
     @KafkaListener(
-            groupId = "location",
+            groupId = "location2",
             containerFactory = "kafkaListenerContainerFactoryLocation",
             topicPartitions = @TopicPartition(
                     topic = "location",
